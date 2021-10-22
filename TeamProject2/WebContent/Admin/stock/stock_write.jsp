@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <%@ include file="/include/header.jsp"%>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
@@ -11,6 +11,8 @@
 	</div>
 	
 	<div class="write-form">
+	<form name="insert" method="post" action="/Admin/stock/stock_write_pro.do?page=${page}">
+		<input type="hidden" name="resive_state" value="Y">
 		<table summery="재고관리 테이블 입니다">
 			<caption class="readonly">재고관리 입력폼</caption>			
 			<colgroup>
@@ -18,85 +20,68 @@
 				<col width="80%">
 			</colgroup>
 			<tbody>
-			<form name="my" method="post" action="qainsert.do" enctype="multipart/form-data" onsubmit="return formcheck();">
 					<tr>
 						<th>부품종류</th>
-						<td><input type="checkbox" name="chk" value="0"> 레버
-						<input type="checkbox" name="chk" value="1"> 버튼
-						<input type="checkbox" name="chk" value="2"> 키보드
-						<input type="checkbox" name="chk" value="3"> 발판
-						<input type="checkbox" name="chk" value="4"> 앰프</td>
+						<td>
+						<c:if test="${vo.kinds=='레버'}"><input type="checkbox" name="kinds" value="레버" checked>레버</c:if>
+						<c:if test="${vo.kinds=='아케이드버튼'}"><input type="checkbox" name="kinds" value="레버" checked>아케이드버튼</c:if>
+						<c:if test="${vo.kinds=='리듬게임버튼'}"><input type="checkbox" name="kinds" value="레버" checked>리듬게임버튼</c:if>
+						<c:if test="${vo.kinds=='부품'}"><input type="checkbox" name="kinds" value="레버" checked>부품</c:if>
+						
+						</td>
+						
 					</tr>
 					<tr>
-						<th>게임종류</th>
-						<td>
-						<select name="kind" name="game">
-							<option value="action"> 액션 </option>
-							<option value="shooting"> 슈팅 </option>
-							<option value="vr"> VR게임 </option>
-							<option value="arcade"> 아케이드 </option>
-							<option value="racing"> 레이싱 </option>
-							<option value="crain"> 크래인 </option>
-						</select>
-						</td>
+					<th>발주번호</th>
+						<td><input type="text" name="order_code" value="${vo.order_code}"></td>
 					</tr>
 					<tr>
 						<th>회사명</th>
-						<td><input type="text" name="company" placeholder="회사명을 입력하세요"></td>
+						<td><input type="text" name="company_name" value="${vo.company_name}"></td>
 					</tr>
 					<tr>
 						<th>제품명</th>
-						
-						<td><input type="text" name="jepum"></td>
+						<td><input type="text" name="stock" value="${vo.stock}"></td>
 					</tr>
 					<tr>
 						<th>모델명</th>
-						<td><input type="text" name="model"></td>
+						<td><input type="text" name="model_name" value="${vo.model_name}"></td>
 					</tr>
 					<tr>
 						<th>가격</th>
 						<td>
-							<input type="text" name="writer" value="">
+							<input type="text" name="model_price" value="${vo.unit_cost}">
 						</td>
 					</tr>
 					<tr>
 						<th>수량</th>
-						<td><input type="text" name="pay" value=""></td>
+						<td><input type="text" name="stock_amount" value="${vo.amount}"></td>
 					</tr>
 					<tr>
-						<th>작성자</th>
-						<td><input type="text" name="member" value=""></td>
+						<th>옵션</th>
+						<td><input type="text" name="option_status" value="${vo.o_option}"></td>
 					</tr>
 					<tr>
-						<th>작성날짜</th>
-						<td><input type="text" name="date" id="Date"></td>
-					</tr>
+						<th>색상</th>
+						<td><input type="text" name="parts_status" value="${vo.color}"></td>
+					</tr>	
 					<tr>
 						<td colspan="2">
-							<input type="submit" value="전송" class="btn-write">
-							<input type="button" value="목록"  class="btn-reset" onclick="javascript:location.href='qa.do'">
+							<input type="button" value="전송" class="btn-write" onClick="javascript:send()">
+							<input type="button" value="목록"  class="btn-reset" onclick="javascript:location.href='/Admin/stock/Stock_list.do?pgae=${page}'">
 						</td>
 					</tr>
-				</form>
 			</tbody>
 		</table>
+		</form>
+		
 	</div>
 		
 </div>
 
 <script>
-	function formcheck() {
-		if(my.title.value=="") {
-			alert("제목입력하세요");
-			my.title.focus();
-			return false;
-		}
-		if(my.content.value=="") {
-			alert("내용입력하세요");
-			my.contnet.focus();
-			return false;
-		}
-		return true;
+	function send() {
+		insert.submit();
 	}
 $(function() { $( "#Date" ).datepicker({ }); });	
 </script>
