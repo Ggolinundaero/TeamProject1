@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+e<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/include/header.jsp"%>
@@ -56,7 +56,7 @@
 				<c:forEach var="stock" items="${list}">
 				<tr>
 					<td >${listcount}</td>
-					<td><a href="/Admin/stock/stock_view.do?order_code=${stock.oder_code}&page=${page}">${stock.stock}</a></td>
+					<td><a href="/Admin/stock/stock_view.do?order_code=${stock.order_code}&page=${page}">${stock.stock}</a></td>
 					<td><a href="">${stock.company_name}</a></td>
 					<td><span  class="red">${stock.model_name}</td>
 					<td>${stock.option_status}</td>
